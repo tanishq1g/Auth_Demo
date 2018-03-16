@@ -1,5 +1,13 @@
 var express = require('express')
 var mongoose = require('mongoose')
+
+var passport = require('passport')
+var bodyParser = require('body-parser')
+var localStrategy = require('passport-local')
+var passportLocalMongosoe = require('passport-local-mongoose')
+
+var user = require('./models/user')
+
 mongoose.connect('mongodb://localhost/auth_demo_app')
 
 var app = express()
