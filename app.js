@@ -65,6 +65,14 @@ app.post('/signup',function(req,res){
     })
 })
 
+
+
+//LOGIN ROUTES
+
+app.get('/login',function(req,res){
+    res.render('login')
+})
+
 app.listen(3000, function(){
     console.log('auth_demo server started');
 })
