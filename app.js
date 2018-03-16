@@ -82,6 +82,13 @@ app.post('/login', passport.authenticate('local' ,{
 
 })
 
+//LOGOUT ROUTES
+
+app.get('/logout',function(req,res){
+    req.logout()
+    res.redirect('/')
+})
+
 
 app.listen(3000, function(){
     console.log('auth_demo server started');
