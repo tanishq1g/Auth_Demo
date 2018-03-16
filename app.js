@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost/auth_demo_app')
 var app = express()
 
 app.set('view engine','ejs')
-
+app.use(bodyParser.urlencoded({extended: true}))
 
 
 
@@ -42,10 +42,28 @@ app.get('/secret',function(req,res){
     res.render('secret')
 })
 
+
+// AUTH ROUTES
+
+
+//show signup form
 app.get('/signup',function(req,res){
     res.render('signup')
 })
 
+//handling user signup form
+app.post('/signup',function(req,res){
+    console.log('signup post route')
+    User.register(new User({username: req.body.username}), req.body.password, function(err, user){
+        if(err){
+            console.log('auth error')
+            return res.render('signup')
+        }
+        passport.authenticate('local')(req, res, function(){
+            res.redirect('secret')
+        })
+    })
+})
 
 app.listen(3000, function(){
     console.log('auth_demo server started');
