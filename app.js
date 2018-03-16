@@ -6,13 +6,31 @@ var bodyParser = require('body-parser')
 var localStrategy = require('passport-local')
 var passportLocalMongosoe = require('passport-local-mongoose')
 
-var user = require('./models/user')
+var User = require('./models/user')
 
 mongoose.connect('mongodb://localhost/auth_demo_app')
 
 var app = express()
 
 app.set('view engine','ejs')
+
+
+
+
+app.use(require('express-session')({
+    secret: "some secret message",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session())
+
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+
+
 
 app.get('/',function(req,res){
     res.render('home')
